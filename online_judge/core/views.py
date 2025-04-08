@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from .models import Submission, Problem
 from .serializers import SubmissionSerializer
+from .serializers import ProblemSerializer
 from django.contrib.auth.models import User
 
 @api_view(['POST'])
@@ -36,6 +37,14 @@ def update_verdict(request):
         return Response({"message":"Verdict updated successfully"}, status=200)
     except Submission.DoesNotExist:
         return Response({"error":"Submission not found"}, status=404)
+    
+
+#{
+#   "submission_id": 4,
+#   "status": "ACCEPTED",
+#   "submission_time": 150,
+#   "submission_memory": 64
+# }
 
 @api_view(['GET'])
 def get_status(request, submission_id):
@@ -44,4 +53,23 @@ def get_status(request, submission_id):
         return Response({"status":submission.status},status=200)
     except Submission.DoesNotExist:
         return Response({"error":"Submission not found"}, status=404)
+    
+
+@api_view(['GET'])
+def submission_history(request,user_id):
+    try:
+        submissions=Submission.objects.filter(user__id=user_id).order_by('-submitted_at')
+        serializer=SubmissionSerializer(submissions, many=True)
+        return Response(serializer.data)
+    except Submission.DoesNotExist:
+        return Response({"error":"User not found"}, status=404)
+
+
+@api_view(['GET'])
+def list_problems(request):
+    problems=Problem.objects.all()
+    serializer=ProblemSerializer(problems, many=True)
+    return Response(serializer.data)
+
+
     
