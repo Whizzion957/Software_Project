@@ -1,0 +1,35 @@
+# Node (React)
+node_modules/
+.env
+build/
+dist/
+
+# Python (Django)
+__pycache__/
+*.py[cod]
+*.sqlite3
+*.log
+*.pot
+*.pyc
+*.pyo
+.env
+.venv/
+venv/
+env/
+db.sqlite3
+media/
+staticfiles/
+
+# MySQL dumps
+*.sql
+
+# VSCode
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+#nodemodule
+online_judge/client/node_modules
+online_judge/client/.gitignore
