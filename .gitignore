@@ -1,35 +1,41 @@
-# Node (React)
-node_modules/
-.env
-build/
-dist/
-
-# Python (Django)
+# Python bytecode
 __pycache__/
 *.py[cod]
-*.sqlite3
-*.log
-*.pot
-*.pyc
-*.pyo
-.env
-.venv/
-venv/
+*$py.class
+
+# Virtual environment
 env/
+venv/
+ENV/
+
+# Database
 db.sqlite3
+*.sqlite3
+*.db
+
+# Local environment variables
+.env
+.env.*
+
+# Django stuff
+*.log
+local_settings.py
 media/
-staticfiles/
 
-# MySQL dumps
-*.sql
-
-# VSCode
+# IDE specific files
+.idea/
 .vscode/
+*.swp
+*.swo
 
-# OS files
+# OS specific files
 .DS_Store
 Thumbs.db
 
-#nodemodule
-online_judge/client/node_modules
-online_judge/client/.gitignore
+# Dependency directories
+node_modules/
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
