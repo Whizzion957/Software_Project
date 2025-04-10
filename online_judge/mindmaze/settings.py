@@ -51,7 +51,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'mindmaze.urls'
+ROOT_URLCONF = 'online_judge.urls'
 
 TEMPLATES = [
     {
@@ -68,7 +68,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'mindmaze.wsgi.application'
+WSGI_APPLICATION = 'online-judge.wsgi.application'
 
 
 # Database
