@@ -71,5 +71,13 @@ def list_problems(request):
     serializer=ProblemSerializer(problems, many=True)
     return Response(serializer.data)
 
+@api_view(['GET'])
+def problem_detail(request, problem_id):
+    try:
+        problem=Problem.objects.get(id=problem_id)
+        serializer=ProblemSerializer(problem)
+        return Response(serializer.data)
+    except Problem.DoesNotExist:
+        return Response({"error":"Problem not found"}, status=status.HTTP_404_NOT_FOUND)
 
     
