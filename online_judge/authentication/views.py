@@ -9,6 +9,27 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import AllowAny
 
+def set_token_cookies(response, tokens):
+    # Set access token cookie
+    response.set_cookie(
+        key='access_token',
+        value=tokens['access'],
+        httponly=True,  
+        secure=True,    
+        samesite='Lax'  
+    )
+    
+    # Set refresh token cookie
+    response.set_cookie(
+        key='refresh_token',
+        value=tokens['refresh'],
+        httponly=True,
+        secure=True,
+        samesite='Lax'
+    )
+    
+    return response
+
 
 def generate_jwt_token(user):
     """
@@ -36,8 +57,15 @@ class SignupView(APIView):
             user = form.save()
             login(request, user)
             # Generate JWT token
-            token = generate_jwt_token(user)
-            return Response({"token": token}, status=status.HTTP_201_CREATED)
+            refresh = RefreshToken.for_user(user)
+            tokens = {
+                'refresh': str(refresh),
+                'access': str(refresh.access_token),
+            }
+            response = Response({"message": "User created successfully"}, status=status.HTTP_201_CREATED)
+            response = set_token_cookies(response, tokens)
+            
+            return response
         return Response(form.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class LoginView(APIView):
@@ -49,8 +77,17 @@ class LoginView(APIView):
         
         if user is not None:
             login(request, user)
-            # Generate JWT token
-            token = generate_jwt_token(user)
-            return Response({"token": token}, status=status.HTTP_200_OK)
+            # Generate JWT token 
+            refresh = RefreshToken.for_user(user)
+            tokens = {
+                'refresh': str(refresh),
+                'access': str(refresh.access_token),
+            }
+            
+            # Create response and set cookies for JWT tokens
+            response = Response({"message": "Login successful"}, status=status.HTTP_200_OK)
+            response = set_token_cookies(response, tokens)
+
+            return response
         return Response({"error": "Invalid credentials"}, status=status.HTTP_401_UNAUTHORIZED)
     
