@@ -1,8 +1,9 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 export default function ProblemDetail() {
+    const navigate = useNavigate();
     const {id} = useParams();
     const [problem, setProblem] = useState(null);
 
@@ -21,6 +22,10 @@ export default function ProblemDetail() {
 
     if(!problem) return <div>Loading...</div>;
 
+    const handleSubmitClick = () => {
+        navigate(`/submit?problem_id=${id}`);
+    };
+
   return (
     <div style={{ padding: 20 }}>
       <h2>{problem.title}</h2>
@@ -30,7 +35,7 @@ export default function ProblemDetail() {
       <p><strong>Rating:</strong> {problem.rating}</p>
       <p><strong>Time Limit:</strong> {problem.time_limit} sec</p>
       <p><strong>Memory Limit:</strong> {problem.memory_limit} MB</p>
-      <button onClick={() => alert("Show code editor here!")}>
+      <button onClick={handleSubmitClick}>
         Submit Code
       </button>
     </div>
