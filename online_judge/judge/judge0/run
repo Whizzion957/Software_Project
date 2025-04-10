@@ -1,0 +1,4 @@
+#!/bin/bash
+./program1 < file1.txt  # Generates file2.txt
+./program2              # Generates result.txt
+cat result.txt          # Output to Judge0's stdout

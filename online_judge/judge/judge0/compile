@@ -1,0 +1,3 @@
+#!/bin/bash
+g++ -o program1 file1.cpp
+g++ -o program2 file2.cpp
